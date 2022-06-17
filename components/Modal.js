@@ -17,7 +17,6 @@ const ModalStyles = styled.div`
   cursor: move;
   background-color: #fff;
   padding: 20px;
-  transition: all 0.3s cubic-bezier(0, 0.26, 0.56, 0.96);
   box-shadow: 3px 3px 8px -2px rgba(1, 15, 29, 0.6);
 
   @media (min-width: 768px) {
@@ -54,11 +53,43 @@ const Modal = ({ closeModal }) => {
   /**
    * Draggable logic
    */
-  const [] = useState({})
+  const [xCoords, setXCoords] = useState(0);
+  const [yCoords, setYCoords] = useState(0);
+  const [isDragging, setIsDragging] = useState(false);
+  const [updatedStyles, setUpdatedStyles] = useState({});
+
+  const handleDragStart = (evt) => {
+    let diffX = evt.screenX - evt.currentTarget.getBoundingClientRect().left;
+    let diffY = evt.screenY - evt.currentTarget.getBoundingClientRect().top;
+    setXCoords(diffX);
+    setYCoords(diffY);
+    setIsDragging(true);
+  };
+
+  const handleDragMove = (evt) => {
+    if (isDragging) {
+      const leftPos = evt.screenX - xCoords;
+      const topPos = evt.screenY - yCoords;
+
+      setUpdatedStyles({
+        left: leftPos,
+        top: topPos,
+      });
+    }
+  };
+
+  const handleDragEnd = () => {
+    setIsDragging(false);
+  };
 
   return (
     <>
-      <ModalStyles>
+      <ModalStyles
+        onMouseDown={handleDragStart}
+        onMouseMove={handleDragMove}
+        onMouseUp={handleDragEnd}
+        style={updatedStyles}
+      >
         <header className="modal-header">Custom Modal Component</header>
         <main className="modal-body">
           Lucas ipsum dolor sit amet sidious maul hutt vader moff dantooine hutt

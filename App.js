@@ -4,7 +4,7 @@ import Toggler from './components/Toggler';
 
 export default function App() {
   return (
-    <div class="container">
+    <div className="container">
       <Toggler />
     </div>
   );
