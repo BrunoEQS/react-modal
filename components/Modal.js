@@ -6,7 +6,7 @@ const ModalStyles = styled.div`
   border: none;
   padding: 0;
   width: 400px;
-  max-width: max-content;
+  max-width: 80vw;
   height: min-content;
   position: absolute;
   top: 50%;
